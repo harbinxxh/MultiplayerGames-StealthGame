@@ -27,7 +27,7 @@ void AFPSGameMode::CompleteMission(APawn* InstigatorPawn)
 			TArray<AActor*> ReturnedActors;
 			UGameplayStatics::GetAllActorsOfClass(this, SpectatingViewpointClass, ReturnedActors);
 
-			if (ReturnedActors.Num())
+			if (ReturnedActors.Num() > 0)
 			{
 				AActor* NewViewTarget = ReturnedActors[0];
 
