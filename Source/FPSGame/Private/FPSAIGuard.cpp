@@ -42,10 +42,17 @@ void AFPSAIGuard::OnPawnSeen(APawn* SeenPawn)
 	{
 		GM->CompleteMission(SeenPawn, false);
 	}
+
+	SetGuardState(EAIState::Alerted);
 }
 
 void AFPSAIGuard::OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, float Volume)
 {
+	if (GuardState == EAIState::Alerted)
+	{
+		return;
+	}
+
 	DrawDebugSphere(GetWorld(), Location, 32.f, 12.f, FColor::Green, false, 10.f);
 
 	FVector Direction = Location - GetActorLocation();
@@ -59,11 +66,20 @@ void AFPSAIGuard::OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, 
 
 	GetWorldTimerManager().ClearTimer(TimerHandle_ResetOrientation);
 	GetWorldTimerManager().SetTimer(TimerHandle_ResetOrientation, this, &AFPSAIGuard::ResetOrientation, 3.f);
+
+	SetGuardState(EAIState::Suspicious);
 }
 
 void AFPSAIGuard::ResetOrientation()
 {
+	if (GuardState == EAIState::Alerted)
+	{
+		return;
+	}
+
 	SetActorRotation(OriginalRotation);
+
+	SetGuardState(EAIState::Idle);
 }
 
 void AFPSAIGuard::SetGuardState(EAIState NewState)
