@@ -52,7 +52,7 @@ protected:
 	void SetGuardState(EAIState NewState);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "AI")
-	void OnStateeChanged(EAIState NewState);
+	void OnStateChanged(EAIState NewState);
 
 public:	
 	// Called every frame

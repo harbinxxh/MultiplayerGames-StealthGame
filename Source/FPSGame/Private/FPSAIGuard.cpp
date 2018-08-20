@@ -120,7 +120,7 @@ void AFPSAIGuard::SetGuardState(EAIState NewState)
 
 	GuardState = NewState;
 
-	OnStateeChanged(GuardState);
+	OnStateChanged(GuardState);
 }
 
 // Called every frame
@@ -133,6 +133,7 @@ void AFPSAIGuard::Tick(float DeltaTime)
 	{
 		FVector Delta = GetActorLocation() - CurrentPatrolPoint->GetActorLocation();
 		float DistanceToGoal = Delta.Size();
+		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("DistanceToGoal : %f"), DistanceToGoal));
 
 		// Check if we are within 50 units of our goal, if so - pick a new patrol point
 		if (DistanceToGoal < 50)
