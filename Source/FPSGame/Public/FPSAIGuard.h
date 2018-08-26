@@ -47,7 +47,13 @@ protected:
 
 	FTimerHandle TimerHandle_ResetOrientation;
 
+	// Property is relevant to network replication. Notify actors when a property is replicated (usage: ReplicatedUsing=FunctionName).
+	UPROPERTY(ReplicatedUsing=OnRep_GuardState)
 	EAIState GuardState;
+
+	// Client 中被调用的方法
+	UFUNCTION()
+	void OnRep_GuardState();
 
 	void SetGuardState(EAIState NewState);
 
